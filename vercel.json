@@ -1,5 +1,4 @@
 {
-  "cleanUrls": true,
   "headers": [
     {
       "source": "/sw.js",
@@ -15,7 +14,7 @@
       ]
     },
     {
-      "source": "/manifest.(webmanifest|json)",
+      "source": "/(.*)\\.(webmanifest|json)",
       "headers": [
         {
           "key": "Content-Type",
