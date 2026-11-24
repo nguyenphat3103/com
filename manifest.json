@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "GeoLex – Từ điển Thuật ngữ Địa lí",
+  "short_name": "GeoLex",
+  "description": "Từ điển thuật ngữ Địa lí song ngữ Việt – Anh cho học sinh THCS lớp 6–9: khái niệm SGK, phiên âm Anh – Anh, Anh – Mỹ, hình ảnh, video và ôn luyện.",
+  "lang": "vi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EEF4FF",
+  "theme_color": "#1560F0",
+  "categories": ["education", "reference"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

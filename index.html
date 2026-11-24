@@ -447,11 +447,40 @@ main{flex:1;min-height:0}
 .inst-btn[hidden]{display:none}
 .inst{position:fixed;inset:0;z-index:220;background:rgba(6,12,30,.65);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:16px}
 .inst[hidden]{display:none}
-.inst-card{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:20px;padding:24px;max-width:460px;width:100%;display:flex;flex-direction:column;gap:14px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.inst-card{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:20px;padding:24px;max-width:480px;width:100%;display:flex;flex-direction:column;gap:14px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
 .inst-card h3{font-size:1.25rem;color:var(--ink)}
-.inst-step{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.inst-step{background:var(--surface-2);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;transition:border-color .2s}
 .inst-step b{color:var(--ink)}
-.inst-step p{margin:.2rem 0 0;font-size:.92rem;color:var(--ink)}
+.inst-step p{margin:.3rem 0 0;font-size:.9rem;color:var(--ink);line-height:1.5}
+
+/* Cảnh báo mở trong In-App Browser (Zalo, Facebook) */
+.inapp-alert{background:#FEF3C7;color:#92400E;border-bottom:1.5px solid #F59E0B;padding:10px 16px;font-size:.88rem;line-height:1.45;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.inapp-alert[hidden]{display:none}
+.inapp-alert-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.inapp-alert-close{background:none;border:none;font-size:1.4rem;line-height:1;color:#92400E;cursor:pointer;padding:0 6px;flex:none}
+:root[data-theme="dark"] .inapp-alert{background:#38240D;color:#FDE68A;border-bottom-color:#B45309}
+:root[data-theme="dark"] .inapp-alert-close{color:#FDE68A}
+
+/* Smart PWA Install Banner nổi bật trên điện thoại */
+.pwa-banner{position:fixed;left:14px;right:14px;bottom:calc(68px + env(safe-area-inset-bottom));z-index:58;background:var(--surface);border:1.5px solid var(--accent);border-radius:16px;box-shadow:0 10px 32px rgba(14,27,61,.2);padding:10px 14px;animation:pwaSlideUp .3s ease-out}
+.pwa-banner[hidden]{display:none}
+@keyframes pwaSlideUp{from{transform:translateY(100%);opacity:0}to{transform:none;opacity:1}}
+.pwa-banner-in{display:flex;align-items:center;gap:12px}
+.pwa-banner-icon{width:42px;height:42px;border-radius:10px;overflow:hidden;flex:none;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.pwa-banner-icon img{width:100%;height:100%;object-fit:cover;display:block}
+.pwa-banner-text{flex:1;min-width:0;display:flex;flex-direction:column}
+.pwa-banner-text strong{font-size:.92rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pwa-banner-text span{font-size:.78rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pwa-banner-btn{flex:none;padding:.5rem .95rem;border-radius:10px;background:linear-gradient(135deg,#1560F0,#00B4D8);color:#fff;font-weight:700;font-size:.85rem;border:none;cursor:pointer;box-shadow:0 2px 8px rgba(21,96,240,.35);transition:transform .15s}
+.pwa-banner-btn:active{transform:scale(.96)}
+.pwa-banner-close{background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;padding:4px 6px;line-height:1;flex:none}
+@media (min-width:821px){
+  .pwa-banner{left:auto;right:24px;bottom:24px;max-width:390px}
+}
+@media (display-mode: standalone){
+  .pwa-banner{display:none!important}
+  .inst-btn{display:none!important}
+}
 
 /* Hướng dẫn Modal - Cấu trúc Flexbox chuẩn không bao giờ bị bẹp */
 .guide-modal{position:fixed;inset:0;z-index:220;background:rgba(6,12,30,.75);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:16px}
@@ -592,8 +621,7 @@ main{flex:1;min-height:0}
   
   .top-btn .btn-lbl{display:none}
   .top-btn{padding:.48rem}
-  .inst-btn span{display:none}
-  .inst-btn{padding:.48rem}
+  .inst-btn{padding:.42rem .75rem;font-size:.82rem}
   .b-name{font-size:1.35rem} .b-sub{font-size:.78rem;padding-left:8px}
   .logo{width:34px;height:34px}
 
@@ -619,6 +647,12 @@ main{flex:1;min-height:0}
 
 </style>
 <body>
+<div id="inapp-alert" class="inapp-alert" hidden>
+  <div class="inapp-alert-in">
+    <span>⚠️ <b>Bạn đang mở trong Zalo / Facebook:</b> Bấm dấu 3 chấm <b>⋮</b> (hoặc •••) ở góc trên ➔ chọn <b>“Mở bằng trình duyệt”</b> (Chrome / Safari) để cài đặt ứng dụng!</span>
+    <button class="inapp-alert-close" data-act="close-inapp-alert" aria-label="Đóng cảnh báo">&times;</button>
+  </div>
+</div>
 <header class="top">
   <div class="top-in">
     <div class="brand">
@@ -693,13 +727,50 @@ main{flex:1;min-height:0}
   <button data-act="view" data-v="on-luyen"><svg class="ic" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg><span>Ôn luyện</span></button>
   <button data-act="open-guide"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg><span>Hướng dẫn</span></button>
 </nav>
+<div id="pwa-banner" class="pwa-banner" hidden>
+  <div class="pwa-banner-in">
+    <div class="pwa-banner-icon">
+      <img src="icons/icon-192.png" alt="GeoLex icon" width="42" height="42">
+    </div>
+    <div class="pwa-banner-text">
+      <strong>Cài đặt GeoLex</strong>
+      <span>Tra cứu ngoại tuyến, mở mượt như app</span>
+    </div>
+    <button class="pwa-banner-btn" data-act="install">📲 Cài app</button>
+    <button class="pwa-banner-close" data-act="close-pwa-banner" aria-label="Đóng">&times;</button>
+  </div>
+</div>
+
 <div id="instbox" class="inst" hidden role="dialog" aria-modal="true" aria-labelledby="instT">
   <div class="inst-card">
-    <h3 id="instT">Cài GeoLex lên điện thoại</h3>
-    <div class="inst-step"><b>Android (Chrome)</b><p>Bấm nút ⋮ ở góc trên bên phải, chọn <b>“Cài đặt ứng dụng”</b> hoặc <b>“Thêm vào màn hình chính”</b>.</p></div>
-    <div class="inst-step"><b>iPhone, iPad (Safari)</b><p>Bấm nút <b>Chia sẻ</b> (hình vuông có mũi tên lên), kéo xuống chọn <b>“Thêm vào MH chính”</b>.</p></div>
-    <p class="muted small">Sau khi cài, GeoLex có biểu tượng riêng trên màn hình, mở toàn màn hình như một ứng dụng và vẫn tra cứu được khi không có mạng.</p>
-    <button class="btn" data-act="inst-close">Đã hiểu</button>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h3 id="instT" style="margin:0">Cài GeoLex lên thiết bị</h3>
+      <button data-act="inst-close" style="font-size:1.5rem;line-height:1;color:var(--muted);cursor:pointer;padding:4px" aria-label="Đóng">&times;</button>
+    </div>
+    <div id="inst-native-wrap" style="display:none">
+      <button class="btn good" style="width:100%;justify-content:center;padding:12px;font-size:1rem;font-weight:700" data-act="inst-trigger-native">
+        📲 Bấm vào đây để Cài đặt ngay
+      </button>
+      <div style="text-align:center;font-size:.8rem;color:var(--muted);margin-top:6px">Nếu không thấy popup hiện lên, vui lòng làm theo hướng dẫn bên dưới:</div>
+    </div>
+    <div class="inst-step" id="inst-step-android">
+      <b>📱 Điện thoại Android (Chrome / Cốc Cốc)</b>
+      <p>1. Bấm nút dấu ba chấm <b>⋮</b> ở góc trên bên phải trình duyệt.<br>
+      2. Chọn <b>“Cài đặt ứng dụng”</b> (hoặc <b>“Thêm vào màn hình chính”</b>).<br>
+      3. Bấm xác nhận <b>“Cài đặt”</b>.</p>
+    </div>
+    <div class="inst-step" id="inst-step-ios">
+      <b>🍏 iPhone / iPad (Safari)</b>
+      <p>1. Mở trang bằng trình duyệt <b>Safari</b>.<br>
+      2. Bấm nút <b>Chia sẻ</b> (biểu tượng hình vuông có mũi tên lên ở thanh dưới cùng).<br>
+      3. Kéo xuống chọn <b>“Thêm vào MH chính”</b> (Add to Home Screen) rồi bấm <b>Thêm</b>.</p>
+    </div>
+    <div class="inst-step" id="inst-step-desktop">
+      <b>💻 Máy tính (Chrome / Edge)</b>
+      <p>Bấm biểu tượng <b>Cài đặt</b> ở góc phải thanh địa chỉ URL (hình màn hình có mũi tên xuống) hoặc menu <b>⋮</b> ➔ <b>Cài đặt GeoLex...</b></p>
+    </div>
+    <p class="muted small" style="margin:0">✨ <b>Lợi ích:</b> Sau khi cài, GeoLex có biểu tượng riêng trên màn hình, mở toàn màn hình và <b>tra cứu được toàn bộ từ điển kể cả khi không có mạng</b>!</p>
+    <button class="btn" data-act="inst-close" style="width:100%;justify-content:center">Đã hiểu</button>
   </div>
 </div>
 
@@ -2154,7 +2225,30 @@ document.addEventListener("click", e => {
     case "open": openTerm(v); break;
     case "close": if (history.state && history.state.d) { history.back(); } else { state.mobileOpen = false; $("#detail").classList.remove("open"); } break;
     case "install": doInstall(); break;
+    case "inst-trigger-native": {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(r => {
+          if (r && r.outcome === "accepted") {
+            $("#instbox").hidden = true;
+            updateInstallUI();
+          }
+        });
+      }
+      break;
+    }
     case "inst-close": $("#instbox").hidden = true; break;
+    case "close-pwa-banner": {
+      const pb = $("#pwa-banner");
+      if (pb) pb.hidden = true;
+      try { sessionStorage.setItem("geolex_pwa_banner_dismissed", "1"); } catch(e){}
+      break;
+    }
+    case "close-inapp-alert": {
+      const ia = $("#inapp-alert");
+      if (ia) ia.hidden = true;
+      break;
+    }
     case "view": goView(v); break;
     case "mark": {
       state.marks.has(v) ? state.marks.delete(v) : state.marks.add(v);
@@ -2226,18 +2320,119 @@ window.addEventListener("hashchange", route);
 
 /* ================= Cài đặt ứng dụng (PWA) ================= */
 let deferredPrompt = null;
-const standalone = () => { try { return matchMedia("(display-mode: standalone)").matches || navigator.standalone === true; } catch (e) { return false; } };
-const topLevel = (() => { try { return window.top === window && /^https?:$/.test(location.protocol); } catch (e) { return false; } })();
-function showInstall(v) { document.querySelectorAll(".inst-btn").forEach(b => b.hidden = !v); }
-showInstall(topLevel && !standalone());
-window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); deferredPrompt = e; showInstall(!standalone()); });
-window.addEventListener("appinstalled", () => { showInstall(false); toast("Đã cài GeoLex lên thiết bị!"); });
+const standalone = () => {
+  try {
+    return matchMedia("(display-mode: standalone)").matches ||
+      navigator.standalone === true ||
+      document.referrer.includes("android-app://");
+  } catch (e) {
+    return false;
+  }
+};
+const topLevel = (() => {
+  try { return window.top === window && /^https?:$/.test(location.protocol); } catch (e) { return false; }
+})();
+
+function isInAppBrowser() {
+  const ua = (navigator.userAgent || navigator.vendor || window.opera || "").toLowerCase();
+  return /fbav|fban|instagram|line|micromessenger|zalo|tiktok|snapchat|musical_ly/i.test(ua);
+}
+
+function updateInstallUI() {
+  const isInstalled = standalone();
+  document.querySelectorAll(".inst-btn").forEach(b => {
+    b.hidden = isInstalled;
+  });
+  const banner = document.getElementById("pwa-banner");
+  if (banner) {
+    let dismissed = false;
+    try { dismissed = sessionStorage.getItem("geolex_pwa_banner_dismissed") === "1"; } catch(e){}
+    banner.hidden = isInstalled || dismissed;
+  }
+  const inAppEl = document.getElementById("inapp-alert");
+  if (inAppEl) {
+    inAppEl.hidden = isInstalled || !isInAppBrowser();
+  }
+}
+
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  updateInstallUI();
+  const nativeWrap = document.getElementById("inst-native-wrap");
+  if (nativeWrap) nativeWrap.style.display = "block";
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredPrompt = null;
+  updateInstallUI();
+  toast("Đã cài GeoLex lên thiết bị thành công!");
+});
+
 async function doInstall() {
   if (deferredPrompt) {
-    try { deferredPrompt.prompt(); const r = await deferredPrompt.userChoice; deferredPrompt = null; if (r && r.outcome === "accepted") showInstall(false); } catch (e) { $("#instbox").hidden = false; }
-  } else $("#instbox").hidden = false;
+    try {
+      deferredPrompt.prompt();
+      const r = await deferredPrompt.userChoice;
+      if (r && r.outcome === "accepted") {
+        deferredPrompt = null;
+        updateInstallUI();
+        return;
+      }
+    } catch (e) {
+      console.warn("Lỗi gọi prompt:", e);
+    }
+  }
+  openInstModal();
 }
-if ("serviceWorker" in navigator && topLevel) { window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); }); }
+
+function openInstModal() {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isAndroid = /Android/.test(navigator.userAgent);
+  const nativeWrap = document.getElementById("inst-native-wrap");
+  if (nativeWrap) {
+    nativeWrap.style.display = deferredPrompt ? "block" : "none";
+  }
+  const androidStep = document.getElementById("inst-step-android");
+  const iosStep = document.getElementById("inst-step-ios");
+  const desktopStep = document.getElementById("inst-step-desktop");
+  if (androidStep && iosStep && desktopStep) {
+    androidStep.style.borderColor = isAndroid ? "var(--accent)" : "var(--line)";
+    androidStep.style.background = isAndroid ? "var(--surface)" : "var(--surface-2)";
+    iosStep.style.borderColor = isIOS ? "var(--accent)" : "var(--line)";
+    iosStep.style.background = isIOS ? "var(--surface)" : "var(--surface-2)";
+    desktopStep.style.borderColor = (!isAndroid && !isIOS) ? "var(--accent)" : "var(--line)";
+    desktopStep.style.background = (!isAndroid && !isIOS) ? "var(--surface)" : "var(--surface-2)";
+  }
+  const instbox = document.getElementById("instbox");
+  if (instbox) instbox.hidden = false;
+}
+
+updateInstallUI();
+
+if ("serviceWorker" in navigator && topLevel) {
+  const registerSW = () => {
+    navigator.serviceWorker.register("sw.js", { scope: "./" })
+      .then(reg => {
+        reg.onupdatefound = () => {
+          const w = reg.installing;
+          if (w) {
+            w.onstatechange = () => {
+              if (w.state === "installed" && navigator.serviceWorker.controller) {
+                toast("Đã có bản cập nhật mới! Tải lại trang để áp dụng.");
+              }
+            };
+          }
+        };
+      })
+      .catch(err => console.warn("SW register fail:", err));
+  };
+  if (document.readyState === "complete") {
+    registerSW();
+  } else {
+    window.addEventListener("load", registerSW);
+  }
+}
 route();
 
 // Cuộn ngang thanh tab hướng dẫn khi dùng con lăn chuột

@@ -1,24 +1,28 @@
-GEOLEX – HƯỚNG DẪN ĐƯA LÊN MẠNG VÀ CÀI TRÊN ĐIỆN THOẠI
+GEOLEX – HƯỚNG DẪN ĐƯA LÊN MẠNG VÀ CÀI TRÊN ĐIỆN THOẠI (PWA)
 
-BƯỚC 1. Đưa ứng dụng lên mạng (miễn phí, khoảng 2 phút)
-  1. Giải nén file geolex-app.zip, được thư mục "geolex-pwa".
-  2. Trên máy tính, mở trang: https://app.netlify.com/drop
-  3. Đăng nhập (có thể dùng tài khoản Google), rồi kéo thả CẢ THƯ MỤC "geolex-pwa" vào trang.
-  4. Netlify cấp cho bạn một đường link dạng https://ten-ngau-nhien.netlify.app
-     (có thể đổi tên trong mục Site settings, ví dụ https://geolex.netlify.app nếu tên còn trống).
-  Cách khác: GitHub Pages, Vercel, Firebase Hosting… đều được, miễn là chạy bằng https.
+BƯỚC 1. Đưa ứng dụng lên Vercel hoặc Netlify
+  • Vercel: Kéo thả thư mục hoặc đẩy qua GitHub. File "vercel.json" đã được thiết lập sẵn để cấu hình PWA chuẩn xác nhất.
+  • Netlify: Kéo thả cả thư mục "geolex-pwa" vào https://app.netlify.com/drop.
+  Lưu ý: Luôn chạy bằng đường link HTTPS (Vercel/Netlify tự động có HTTPS).
 
 BƯỚC 2. Cài lên điện thoại
-  Android (Chrome): mở link → bấm nút "Cài app" trên đầu trang, hoặc menu ⋮ → "Cài đặt ứng dụng".
-  iPhone/iPad (Safari): mở link → nút Chia sẻ → "Thêm vào MH chính".
+  1. ĐIỆN THOẠI ANDROID (Google Chrome / Cốc Cốc):
+     - Mở đường link trên Chrome.
+     - Sẽ có thanh thông báo "📲 Cài đặt GeoLex" xuất hiện nổi bật ở dưới màn hình và nút màu vàng "Cài app" ở góc trên.
+     - Bấm "Cài đặt" (hoặc bấm nút menu 3 chấm ⋮ góc phải trên ➔ chọn "Cài đặt ứng dụng" / "Thêm vào màn hình chính").
+     - Ứng dụng sẽ được cài thành app độc lập trên màn hình chính của máy!
 
-Sau khi cài: GeoLex có biểu tượng riêng, mở toàn màn hình, tra cứu được cả khi không có mạng
-(video YouTube vẫn cần mạng).
+  2. IPHONE / IPAD (Safari):
+     - Bắt buộc mở link bằng trình duyệt Safari.
+     - Bấm nút Chia sẻ (biểu tượng ô vuông có mũi tên hướng lên ở thanh dưới).
+     - Cuộn xuống chọn "Thêm vào MH chính" (Add to Home Screen) ➔ Bấm "Thêm".
 
-CẬP NHẬT NỘI DUNG
-  Khi có bản index.html mới: thay file trong thư mục, mở file sw.js và đổi "geolex-v3" thành
-  "geolex-v4" (tăng số), rồi kéo thả lại thư mục lên Netlify. Điện thoại sẽ tự nhận bản mới.
+  ⚠️ LƯU Ý QUAN TRỌNG KHI GỬI LINK QUA ZALO / FACEBOOK MESSENGER:
+     - Trình duyệt tích hợp của Zalo và Facebook không hỗ trợ cài đặt PWA.
+     - Khi bấm link trong Zalo/Facebook, bạn hãy bấm dấu 3 chấm (⋮ hoặc •••) ở góc trên bên phải ➔ Chọn "Mở bằng trình duyệt" (Chrome trên Android, Safari trên iPhone) thì mới thấy nút cài đặt!
 
-MUỐN CÓ FILE APK CHO ANDROID (tuỳ chọn)
-  Sau khi có link https, vào https://www.pwabuilder.com, dán link → Package for stores → Android
-  để tạo file APK/AAB (dùng cài trực tiếp hoặc đưa lên Google Play).
+BƯỚC 3. Tạo file APK để cài trực tiếp như app Android thông thường (Tuỳ chọn)
+  - Sau khi trang đã chạy trên Vercel, copy link trang (ví dụ https://geolex.vercel.app).
+  - Truy cập: https://www.pwabuilder.com
+  - Dán link vào ➔ Bấm "Start" ➔ Bấm "Package for Stores" ➔ Chọn "Android" để tải về file APK.
+  - File APK này có thể gửi qua Zalo để cài đặt trực tiếp vào mọi máy Android.
